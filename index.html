@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function weather() {
+            let select = document.getElementById("select").value;
+            var request = new XMLHttpRequest();
+            request.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${select}&appid=d05c1cf90a5133faa1ede98df3d1c5af`);
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var data = JSON.parse(request.responseText);
+                    console.log(data);
+                    document.getElementById("temp").innerHTML = `<h4>Temperature is ${data.main.temp}</h4>`;
+                    document.getElementById("humidity").innerHTML = `<h4>Humidity is ${data.main.humidity}</h4>`;
+                    document.getElementById("desc").innerHTML = `<h4>Description is ${data.weather[0].description}</h4>`;
+                } else {
+                    console.log("error");
+                }
+            }
+            request.send();
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Want To Know About Weather Details</h1>
+    <select name="select" id="select">
+        <option selected>Select</option>
+        <option>New Zealand</option>
+        <option>London</option>
+        <option>Hyderabad</option>
+        <option>Andhra Pradesh</option>
+        <option>America</option>
+        <option>Cannada</option>
+        <option>England</option>
+        <option>China</option>
+        <option>Japan</option>
+        <option>Korea</option>
+        <option>Australia</option>
+    </select>
+    <input type="button" value="Click Me to See Magic" onclick="weather();">
+    <p id="temp"></p>
+    <p id="humidity"></p>
+    <p id="desc"></p>
+</body>
+
+</html>
